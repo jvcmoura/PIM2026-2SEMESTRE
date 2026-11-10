@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ultra Fit - Painel Administrativo</title>
+<style>
+  :root {
+    --primary: #ff6b00; --primary-dark: #c24f00;
+    --bg: #0f0f14; --card: #1b1b24; --line: #34343f;
+    --text: #ffffff; --muted: #c4c4cf; --ok: #3ddc84; --warn: #ffd166; --bad: #ff6b6b;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, "Segoe UI", Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 16px; }
+  h1, h2, h3 { margin: 0 0 .6rem; }
+  a, button, input, select { font: inherit; }
+  :focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+  .hidden { display: none !important; }
+  .skip { position: absolute; left: -999px; } .skip:focus { left: 8px; top: 8px; background: #fff; color: #000; padding: 8px; z-index: 10; }
+
+  /* login */
+  #login { max-width: 420px; margin: 8vh auto; padding: 24px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
+  label { display: block; margin: 12px 0 4px; color: var(--muted); }
+  input, select { width: 100%; padding: 10px; background: #12121a; color: var(--text); border: 1px solid var(--line); border-radius: 8px; }
+  button { cursor: pointer; border: 0; border-radius: 8px; padding: 10px 16px; background: var(--primary); color: #000; font-weight: 700; }
+  button:hover { background: #ff8a33; }
+  button.sec { background: transparent; color: var(--text); border: 1px solid var(--line); }
+  button.sm { padding: 5px 10px; font-size: .9rem; }
+  button.danger { background: var(--bad); }
+  .msg { margin-top: 12px; min-height: 1.4em; }
+  .erro { color: var(--bad); } .sucesso { color: var(--ok); }
+
+  /* app */
+  header { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 20px; background: var(--card); border-bottom: 2px solid var(--primary); }
+  header h1 { margin: 0; font-size: 1.25rem; flex: 1; }
+  nav { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 20px; }
+  nav button { background: var(--card); color: var(--text); border: 1px solid var(--line); }
+  nav button[aria-current="page"] { background: var(--primary); color: #000; border-color: var(--primary); }
+  main { padding: 0 20px 40px; max-width: 1100px; margin: 0 auto; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 12px 0 24px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+  .card .n { font-size: 1.9rem; font-weight: 800; color: var(--primary); }
+  .card .t { color: var(--muted); }
+  form.inline { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 8px 12px; align-items: end; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px 16px; margin-bottom: 16px; }
+  .tablewrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 12px; overflow: hidden; }
+  caption { text-align: left; padding: 8px 4px; color: var(--muted); }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { background: #23232e; }
+  .badge { padding: 2px 8px; border-radius: 99px; font-size: .85rem; font-weight: 700; color: #000; }
+  .b-ok { background: var(--ok); } .b-warn { background: var(--warn); } .b-bad { background: var(--bad); } .b-neutro { background: #b9b9c6; }
+  .vazio { color: var(--muted); padding: 16px; }
+</style>
+</head>
+<body>
+<a class="skip" href="#conteudo">Ir para o conteúdo</a>
+
+<!-- ===== LOGIN ===== -->
+<section id="login" aria-labelledby="tituloLogin">
+  <h1 id="tituloLogin">Ultra Fit</h1>
+  <p>Painel administrativo. Acesso restrito a professores.</p>
+  <form id="formLogin">
+    <label for="apiUrl">Endereço da API</label>
+    <input id="apiUrl" type="url" required>
+    <label for="email">E-mail</label>
+    <input id="email" type="email" autocomplete="username" required>
+    <label for="senha">Senha</label>
+    <input id="senha" type="password" autocomplete="current-password" required>
+    <p style="margin-top:16px"><button type="submit">Entrar</button></p>
+    <p id="msgLogin" class="msg erro" role="alert"></p>
+  </form>
+</section>
+
+<!-- ===== APP ===== -->
+<div id="app" class="hidden">
+  <header>
+    <h1>Ultra Fit | Painel Administrativo</h1>
+    <span id="usuario"></span>
+    <button class="sec" id="btnSair" type="button">Sair</button>
+  </header>
+  <nav aria-label="Seções">
+    <button data-tab="painel">Painel</button>
+    <button data-tab="alunos">Alunos</button>
+    <button data-tab="planos">Planos</button>
+    <button data-tab="matriculas">Matrículas</button>
+    <button data-tab="pagamentos">Pagamentos</button>
+    <button data-tab="inadimplentes">Inadimplentes</button>
+    <button data-tab="checkins">Check-ins</button>
+  </nav>
+  <main id="conteudo" tabindex="-1">
+    <p id="msgApp" class="msg" role="status" aria-live="polite"></p>
+    <div id="view"></div>
+  </main>
+</div>
+
+<script>
+"use strict";
+
+/* ---------- Estado e utilidades ---------- */
+const store = {
+  get(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { sessionStorage.setItem(k, v); } catch (e) { /* ignora */ } },
+  del(k) { try { sessionStorage.removeItem(k); } catch (e) { /* ignora */ } }
+};
+let API = (function () { try { return localStorage.getItem("apiUrl"); } catch (e) { return null; } })() || "http://localhost:5260";
+let token = store.get("token");
+let aba = "painel";
+
+const $ = (s) => document.querySelector(s);
+const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const moeda = (v) => Number(v).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+const data = (v) => v ? new Date(v).toLocaleDateString("pt-BR") : "-";
+const dataHora = (v) => v ? new Date(v).toLocaleString("pt-BR") : "-";
+const hojeISO = () => new Date().toISOString().slice(0, 10);
+
+function aviso(texto, tipo) {
+  const el = $("#msgApp");
+  el.textContent = texto || "";
+  el.className = "msg " + (tipo || "");
+}
+
+/* ---------- Cliente HTTP (todas as chamadas passam por aqui) ---------- */
+async function api(metodo, caminho, corpo) {
+  const headers = {};
+  if (corpo !== undefined) headers["Content-Type"] = "application/json";
+  if (token) headers["Authorization"] = "Bearer " + token;
+  let res;
+  try {
+    res = await fetch(API + caminho, { method: metodo, headers, body: corpo !== undefined ? JSON.stringify(corpo) : undefined });
+  } catch (e) {
+    throw new Error("Não foi possível conectar à API em " + API + ". Verifique se ela está rodando.");
+  }
+  if (res.status === 401) { sair(); throw new Error("Sessão expirada. Entre novamente."); }
+  if (res.status === 403) throw new Error("Sem permissão para esta operação.");
+  if (!res.ok) {
+    let detalhe = "";
+    try { const j = await res.json(); detalhe = j.message || j.erro || j.title || ""; } catch (e) { /* sem corpo */ }
+    throw new Error(detalhe || ("Erro " + res.status));
+  }
+  if (res.status === 204) return null;
+  const txt = await res.text();
+  return txt ? JSON.parse(txt) : null;
+}
+
+/* ---------- Login ---------- */
+$("#apiUrl").value = API;
+$("#formLogin").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const msg = $("#msgLogin");
+  msg.textContent = "";
+  API = $("#apiUrl").value.trim().replace(/\/$/, "");
+  try {
+    const r = await api("POST", "/api/auth/login", { email: $("#email").value.trim(), senha: $("#senha").value });
+    if (r.perfil !== "Professor") { token = null; msg.textContent = "Este painel é restrito a professores. Alunos devem usar o aplicativo."; return; }
+    token = r.token;
+    store.set("token", token); store.set("nome", r.nome);
+    try { localStorage.setItem("apiUrl", API); } catch (err) { /* ignora */ }
+    $("#senha").value = "";
+    entrar();
+  } catch (err) {
+    msg.textContent = err.message === "Erro 401" ? "E-mail ou senha inválidos." : err.message;
+  }
+});
+
+function entrar() {
+  $("#login").classList.add("hidden");
+  $("#app").classList.remove("hidden");
+  $("#usuario").textContent = store.get("nome") || "";
+  abrir("painel");
+}
+function sair() {
+  token = null; store.del("token"); store.del("nome");
+  $("#app").classList.add("hidden");
+  $("#login").classList.remove("hidden");
+}
+$("#btnSair").addEventListener("click", sair);
+
+document.querySelectorAll("nav button").forEach((b) => b.addEventListener("click", () => abrir(b.dataset.tab)));
+
+/* ---------- Componentes ---------- */
+function badge(status) {
+  const s = String(status || "");
+  const map = { Pago: "b-ok", Ativa: "b-ok", Ativo: "b-ok", Pendente: "b-warn", Atrasado: "b-bad", Inadimplente: "b-bad", Cancelada: "b-neutro" };
+  return `<span class="badge ${map[s] || "b-neutro"}">${esc(s)}</span>`;
+}
+function tabela(titulo, colunas, linhas) {
+  if (!linhas.length) return `<p class="vazio">Nenhum registro.</p>`;
+  return `<div class="tablewrap"><table><caption>${esc(titulo)}</caption><thead><tr>${colunas.map((c) => `<th scope="col">${esc(c)}</th>`).join("")}</tr></thead><tbody>${linhas.map((l) => `<tr>${l.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+function campo(id, rotulo, tipo, extra) {
+  return `<div><label for="${id}">${esc(rotulo)}</label><input id="${id}" type="${tipo}" ${extra || "required"}></div>`;
+}
+function selectCampo(id, rotulo, opcoes) {
+  return `<div><label for="${id}">${esc(rotulo)}</label><select id="${id}" required>${opcoes.map((o) => `<option value="${esc(o[0])}">${esc(o[1])}</option>`).join("")}</select></div>`;
+}
+const view = () => $("#view");
+
+async function executar(fn, sucesso) {
+  try { await fn(); if (sucesso) aviso(sucesso, "sucesso"); }
+  catch (e) { aviso(e.message, "erro"); }
+}
+
+/* ---------- Telas ---------- */
+const telas = {
+  async painel() {
+    const [alunos, mats, pags, inad, checks] = await Promise.all([
+      api("GET", "/api/alunos"), api("GET", "/api/matriculas"), api("GET", "/api/pagamentos"),
+      api("GET", "/api/pagamentos/inadimplentes"), api("GET", "/api/checkins")
+    ]);
+    const hoje = hojeISO();
+    const pendentes = pags.filter((p) => p.status === "Pendente").length;
+    const atrasados = pags.filter((p) => p.status === "Atrasado").length;
+    const recebido = pags.filter((p) => p.status === "Pago").reduce((s, p) => s + Number(p.valor), 0);
+    const totalAtraso = inad.reduce((s, i) => s + Number(i.totalEmAtraso), 0);
+    const checkHoje = checks.filter((c) => String(c.dataHora).slice(0, 10) === hoje).length;
+    const c = (n, t) => `<div class="card"><div class="n">${esc(n)}</div><div class="t">${esc(t)}</div></div>`;
+    view().innerHTML = `<h2>Painel</h2><div class="cards">
+      ${c(alunos.length, "Alunos cadastrados")}${c(mats.length, "Matrículas")}
+      ${c(pendentes, "Pagamentos pendentes")}${c(atrasados, "Pagamentos em atraso")}
+      ${c(moeda(recebido), "Total recebido")}${c(inad.length, "Alunos inadimplentes")}
+      ${c(moeda(totalAtraso), "Valor em atraso")}${c(checkHoje, "Check-ins hoje")}</div>`;
+  },
+
+  async alunos() {
+    const lista = await api("GET", "/api/alunos");
+    view().innerHTML = `<h2>Alunos</h2>
+      <form class="inline" id="fAluno"><h3 style="grid-column:1/-1">Novo aluno</h3>
+        ${campo("aNome", "Nome", "text")}${campo("aEmail", "E-mail", "email")}${campo("aSenha", "Senha", "password", 'required minlength="6"')}${campo("aTel", "Telefone", "tel", "")}
+        <div><button type="submit">Cadastrar</button></div></form>
+      ${tabela("Lista de alunos", ["Id", "Nome", "E-mail", "Telefone", "Status", "Cadastro", "Ações"],
+        lista.map((a) => [esc(a.id), esc(a.nome), esc(a.email), esc(a.telefone || "-"), badge(a.status), data(a.dataCadastro),
+          `<button class="sm danger" data-del="${esc(a.id)}" aria-label="Excluir aluno ${esc(a.nome)}">Excluir</button>`]))}`;
+    $("#fAluno").addEventListener("submit", (e) => { e.preventDefault(); executar(async () => {
+      await api("POST", "/api/alunos", { nome: $("#aNome").value.trim(), email: $("#aEmail").value.trim(), senha: $("#aSenha").value, telefone: $("#aTel").value.trim() || null });
+      await abrir("alunos", "Aluno cadastrado."); }); });
+    ligarExcluir("/api/alunos", "alunos", "Excluir este aluno?");
+  },
+
+  async planos() {
+    const lista = await api("GET", "/api/planos");
+    view().innerHTML = `<h2>Planos</h2>
+      <form class="inline" id="fPlano"><h3 style="grid-column:1/-1">Novo plano</h3>
+        ${campo("pNome", "Nome do plano", "text")}${campo("pValor", "Valor (R$)", "number", 'required min="0.01" step="0.01"')}${campo("pDur", "Duração (meses)", "number", 'required min="1" step="1"')}
+        <div><button type="submit">Cadastrar</button></div></form>
+      ${tabela("Planos", ["Id", "Plano", "Valor", "Duração", "Ativo", "Ações"],
+        lista.map((p) => [esc(p.id), esc(p.nomePlano), moeda(p.valor), esc(p.duracaoMeses) + " mês(es)", p.ativo ? "Sim" : "Não",
+          `<button class="sm danger" data-del="${esc(p.id)}" aria-label="Excluir plano ${esc(p.nomePlano)}">Excluir</button>`]))}`;
+    $("#fPlano").addEventListener("submit", (e) => { e.preventDefault(); executar(async () => {
+      await api("POST", "/api/planos", { nomePlano: $("#pNome").value.trim(), valor: Number($("#pValor").value), duracaoMeses: Number($("#pDur").value) });
+      await abrir("planos", "Plano cadastrado."); }); });
+    ligarExcluir("/api/planos", "planos", "Excluir este plano?");
+  },
+
+  async matriculas() {
+    const [lista, alunos, planos] = await Promise.all([api("GET", "/api/matriculas"), api("GET", "/api/alunos"), api("GET", "/api/planos")]);
+    view().innerHTML = `<h2>Matrículas</h2>
+      <form class="inline" id="fMat"><h3 style="grid-column:1/-1">Nova matrícula</h3>
+        ${selectCampo("mAluno", "Aluno", alunos.map((a) => [a.id, a.nome]))}${selectCampo("mPlano", "Plano", planos.map((p) => [p.id, p.nomePlano]))}
+        ${campo("mData", "Data de início", "date")}<div><button type="submit">Matricular</button></div></form>
+      ${tabela("Matrículas", ["Id", "Aluno", "Plano", "Início", "Fim", "Status", "Ações"],
+        lista.map((m) => [esc(m.id), esc(m.nomeAluno), esc(m.nomePlano), data(m.dataInicio), data(m.dataFim), badge(m.status),
+          `<button class="sm danger" data-del="${esc(m.id)}" aria-label="Excluir matrícula ${esc(m.id)}">Excluir</button>`]))}`;
+    $("#mData").value = hojeISO();
+    $("#fMat").addEventListener("submit", (e) => { e.preventDefault(); executar(async () => {
+      await api("POST", "/api/matriculas", { alunoId: Number($("#mAluno").value), planoId: Number($("#mPlano").value), dataInicio: $("#mData").value });
+      await abrir("matriculas", "Matrícula criada."); }); });
+    ligarExcluir("/api/matriculas", "matriculas", "Excluir esta matrícula?");
+  },
+
+  async pagamentos() {
+    const [lista, mats] = await Promise.all([api("GET", "/api/pagamentos"), api("GET", "/api/matriculas")]);
+    view().innerHTML = `<h2>Pagamentos</h2>
+      <form class="inline" id="fPag"><h3 style="grid-column:1/-1">Novo pagamento (parcela)</h3>
+        ${selectCampo("gMat", "Matrícula", mats.map((m) => [m.id, `#${m.id} - ${m.nomeAluno} (${m.nomePlano})`]))}
+        ${campo("gValor", "Valor (R$)", "number", 'required min="0.01" step="0.01"')}${campo("gVenc", "Vencimento", "date")}
+        <div><button type="submit">Lançar</button></div></form>
+      ${tabela("Pagamentos", ["Id", "Aluno", "Matrícula", "Valor", "Vencimento", "Pago em", "Status", "Ações"],
+        lista.map((p) => [esc(p.id), esc(p.nomeAluno), esc(p.matriculaId), moeda(p.valor), data(p.dataVencimento), data(p.dataPagamento), badge(p.status),
+          (p.status !== "Pago" ? `<button class="sm" data-pagar="${esc(p.id)}" aria-label="Registrar pagamento ${esc(p.id)}">Dar baixa</button> ` : "") +
+          `<button class="sm danger" data-del="${esc(p.id)}" aria-label="Excluir pagamento ${esc(p.id)}">Excluir</button>`]))}`;
+    $("#fPag").addEventListener("submit", (e) => { e.preventDefault(); executar(async () => {
+      const m = mats.find((x) => String(x.id) === $("#gMat").value);
+      await api("POST", "/api/pagamentos", { alunoId: m.alunoId, matriculaId: m.id, valor: Number($("#gValor").value), dataVencimento: $("#gVenc").value });
+      await abrir("pagamentos", "Pagamento lançado."); }); });
+    view().querySelectorAll("[data-pagar]").forEach((b) => b.addEventListener("click", () => executar(async () => {
+      await api("PATCH", `/api/pagamentos/${b.dataset.pagar}/pagar`);
+      await abrir("pagamentos", "Pagamento baixado (procedure sp_RegistrarPagamento)."); })));
+    ligarExcluir("/api/pagamentos", "pagamentos", "Excluir este pagamento?");
+  },
+
+  async inadimplentes() {
+    const lista = await api("GET", "/api/pagamentos/inadimplentes");
+    view().innerHTML = `<h2>Alunos inadimplentes</h2><p>Calculado pela procedure <code>sp_CalcularInadimplencia</code>.</p>` +
+      tabela("Inadimplentes", ["Aluno", "E-mail", "Parcelas em atraso", "Total em atraso"],
+        lista.map((i) => [esc(i.nome), esc(i.email), esc(i.quantidadeParcelasAtrasadas), moeda(i.totalEmAtraso)]));
+  },
+
+  async checkins() {
+    const lista = await api("GET", "/api/checkins");
+    view().innerHTML = `<h2>Check-ins de presença</h2>` +
+      tabela("Check-ins", ["Id", "Aluno", "Data e hora"], lista.map((c) => [esc(c.id), esc(c.nomeAluno), dataHora(c.dataHora)]));
+  }
+};
+
+function ligarExcluir(base, voltar, pergunta) {
+  view().querySelectorAll("[data-del]").forEach((b) => b.addEventListener("click", () => {
+    if (!confirm(pergunta)) return;
+    executar(async () => { await api("DELETE", `${base}/${b.dataset.del}`); await abrir(voltar, "Registro excluído."); });
+  }));
+}
+
+async function abrir(nome, mensagem) {
+  aba = nome;
+  document.querySelectorAll("nav button").forEach((b) => {
+    if (b.dataset.tab === nome) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
+  });
+  aviso(mensagem || "", mensagem ? "sucesso" : "");
+  view().innerHTML = `<p class="vazio">Carregando...</p>`;
+  try { await telas[nome](); }
+  catch (e) { if (token) { view().innerHTML = ""; aviso(e.message, "erro"); } }
+}
+
+if (token) entrar();
+</script>
+</body>
+</html>
