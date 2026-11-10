@@ -6,3 +6,4 @@ node_modules/
 dist/
 appsettings.json
 appsettings.Development.json
+.env

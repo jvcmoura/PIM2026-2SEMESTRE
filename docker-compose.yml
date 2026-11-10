@@ -1,0 +1,29 @@
+# Sobe o banco SQL Server e a API em containers.
+# Uso:  copie .env.example para .env, ajuste os valores e rode: docker compose up --build
+# Depois de subir, execute database/UltraFit_Schema.sql no banco (porta 1433) para criar as tabelas.
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "1433:1433"
+    volumes:
+      - dbdata:/var/opt/mssql
+
+  api:
+    build: ./backend/UltraFit.Api
+    depends_on:
+      - db
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=db,1433;Database=UltraFitDB;User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;"
+      Jwt__Key: ${JWT_KEY}
+      Jwt__Issuer: UltraFitApi
+      Jwt__Audience: UltraFitClient
+      Jwt__ExpireMinutes: "120"
+    ports:
+      - "5260:8080"
+
+volumes:
+  dbdata:
