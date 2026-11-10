@@ -68,32 +68,32 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+// CORS: permite que a aplicação web (outra origem) consuma a API.
+// A autenticação é por token JWT no cabeçalho, sem cookies.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Web", policy =>
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    if (app.Environment.IsDevelopment())
-{
     app.MapOpenApi();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-    app.MapOpenApi();
-}
 
 app.UseHttpsRedirection();
+
+app.UseCors("Web");
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.MapGet("/api/teste-conexao", async (UltraFit.Api.Data.ApplicationDbContext db) =>
-{
-    var alunos = await db.Alunos.ToListAsync();
-    return Results.Ok(alunos);
-});
 
 app.Run();
