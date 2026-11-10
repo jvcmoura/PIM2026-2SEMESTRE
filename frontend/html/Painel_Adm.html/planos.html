@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Fit - Planos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../../css/Painel_adm/planos.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- MENU LATERAL -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h2>ULTRA FIT</h2>
+                <span>Gestão Corporativa</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="paineladm.html" class="nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="alunos.html" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Alunos</span>
+                </a>
+                <a href="professores.html" class="nav-item">
+                    <i class="fas fa-chalkboard-user"></i>
+                    <span>Professores</span>
+                </a>
+                <a href="planos.html" class="nav-item active">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Planos</span>
+                </a>
+                <a href="pagamentos.html" class="nav-item">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Pagamentos</span>
+                </a>
+                <a href="relatorios.html" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Relatórios</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+            <button id="btnSair" onclick="fazerLogout()" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:#ccc;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:0.85rem;width:100%;margin-bottom:10px;" onmouseover="this.style.background='rgba(231,76,60,0.35)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#ccc'">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+                <i class="fas fa-dumbbell"></i> v2.0 · Ultra Fit
+            </div>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="main-content">
+            <!-- CABEÇALHO -->
+            <div class="page-header">
+                <div>
+                    <h1>Planos</h1>
+                    <p>Gerenciamento de planos da academia</p>
+                </div>
+                <button class="btn-primary" id="btnNovoPlano">
+                    <i class="fas fa-plus"></i> Novo Plano
+                </button>
+            </div>
+
+            <!-- CARDS DOS PLANOS -->
+            <div class="planos-grid" id="planosGrid">
+                <!-- Os planos serão inseridos aqui via JS -->
+            </div>
+
+            <!-- MENSAGEM QUANDO NÃO HÁ PLANOS -->
+            <div id="emptyMessage" class="empty-message" style="display: none;">
+                <i class="fas fa-clipboard-list"></i>
+                <h3>Nenhum plano cadastrado</h3>
+                <p>Clique em "Novo Plano" para começar</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL CADASTRAR/EDITAR PLANO -->
+    <div id="modalPlano" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle"><i class="fas fa-plus-circle"></i> Novo Plano</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="formPlano">
+                <input type="hidden" id="planoId">
+                <div class="form-group">
+                    <label><i class="fas fa-tag"></i> Nome do Plano</label>
+                    <select id="nome" required>
+                        <option value="Básico">Básico</option>
+                        <option value="Premium">Premium</option>
+                        <option value="Ultra">Ultra</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-dollar-sign"></i> Preço Mensal (R$)</label>
+                    <input type="number" id="preco" required placeholder="Ex: 89.90" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-alt"></i> Duração</label>
+                    <select id="duracao" required>
+                        <option value="Mensal">Mensal</option>
+                        <option value="Trimestral">Trimestral</option>
+                        <option value="Semestral">Semestral</option>
+                        <option value="Anual">Anual</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-check-circle"></i> Benefícios</label>
+                    <div class="beneficios-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="Acesso 24h"> Acesso 24h
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="Aulas em grupo"> Aulas em grupo
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="Personal Trainer"> Personal Trainer
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="Estacionamento"> Estacionamento
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="Avaliação Física"> Avaliação Física
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" value="App exclusivo"> App exclusivo
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-toggle-on"></i> Status</label>
+                    <select id="status">
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" id="cancelModal">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar Plano</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../js/Painel_Adm/planos.js"></script>
+    <!-- VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Ultra Fit - Área do Aluno</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../../css/Alunos/Alunos.css">  
+    <script src="../../js/config.js" defer></script>
+    <script src="../../js/Alunos/alunos.js" defer></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- MENU LATERAL -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <div class="logo-text">
+                    <h2>ULTRA FIT</h2>
+                    <span>Área do Aluno</span>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="javascript:void(0)" class="nav-item active" data-page="dashboard" onclick="navegarPara('Dashboard')">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-item" data-page="meu-plano" onclick="navegarPara('MeuPlano')">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Meu Plano</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-item" data-page="presenca" onclick="navegarPara('Presenca')">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Presença</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-item" data-page="avaliacao" onclick="navegarPara('Avaliacao')">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>Avaliação Física</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="aluno-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="sidebarNome">Carregando...</span>
+                </div>
+                <button class="btn-logout" id="btnLogout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="main-content">
+            <!-- CABEÇALHO -->
+            <header class="top-header">
+                <div class="header-title">
+                    <h1 id="pageTitle">Dashboard</h1>
+                    <p id="pageSubtitle">Bem-vindo de volta!</p>
+                </div>
+                <div class="header-actions">
+                    <div class="date-badge">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="dataAtual"></span>
+                    </div>
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- PÁGINA: DASHBOARD -->
+            <div id="paginaDashboard" class="page-content active">
+                <!-- MENSAGEM DE BOAS-VINDAS -->
+                <div class="welcome-card">
+                    <div class="welcome-text">
+                        <h2>Olá, <span id="welcomeNome">Aluno</span>! 👋</h2>
+                        <p id="mensagemSemana">Você treinou X vezes essa semana. Continue assim!</p>
+                    </div>
+                    <div class="welcome-icon">
+                        <i class="fas fa-smile-wink"></i>
+                    </div>
+                </div>
+
+                <!-- CARDS PRINCIPAIS -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon orange">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        <div class="stat-details">
+                            <span class="stat-label">Plano Atual</span>
+                            <h3 class="stat-value" id="planoAtual">Premium</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="stat-details">
+                            <span class="stat-label">Próximo Vencimento</span>
+                            <h3 class="stat-value" id="proximoVencimento">15/04/2024</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-details">
+                            <span class="stat-label">Status</span>
+                            <h3 class="stat-value" id="statusPlano">
+                                <span class="status-badge status-ativo">Ativo</span>
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon purple">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <div class="stat-details">
+                            <span class="stat-label">Frequência (mês)</span>
+                            <h3 class="stat-value" id="frequencia">0 dias</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHECK-IN RÁPIDO -->
+                <div class="checkin-card">
+                    <div class="card-header">
+                        <i class="fas fa-fingerprint"></i>
+                        <h3>Registrar Presença</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="checkin-info">
+                            <p>Clique no botão abaixo para registrar sua presença na academia hoje.</p>
+                            <div class="checkin-stats">
+                                <div class="checkin-stat">
+                                    <i class="fas fa-calendar-day"></i>
+                                    <span id="dataHoje"></span>
+                                </div>
+                                <div class="checkin-stat">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="horaAtual"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-checkin" id="btnCheckin">
+                            <i class="fas fa-check-double"></i>
+                            <span>Fazer Check-in</span>
+                        </button>
+                        <div id="checkinStatus" class="checkin-status" style="display: none;">
+                            <div class="status-message success">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Check-in realizado hoje!</strong>
+                                    <p>Você já registrou sua presença. Volte amanhã!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HISTÓRICO RECENTE -->
+                <div class="history-card">
+                    <div class="card-header">
+                        <i class="fas fa-history"></i>
+                        <h3>Atividades Recentes</h3>
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="history-list" id="historyList">
+                            <div class="history-item">
+                                <div class="history-icon"><i class="fas fa-dumbbell"></i></div>
+                                <div class="history-info">
+                                    <div class="history-title">Treino realizado</div>
+                                    <div class="history-date">Hoje, 09:30</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA: MEU PLANO -->
+            <div id="paginaMeuPlano" class="page-content">
+                <div class="plano-card">
+                    <div class="plano-header">
+                        <div class="plano-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="plano-info">
+                            <h2 id="planoNome">Premium</h2>
+                            <p class="plano-preco" id="planoValor">R$ 149,90 <span>/mês</span></p>
+                        </div>
+                    </div>
+                    <div class="plano-body">
+                        <h4><i class="fas fa-check-circle"></i> Benefícios do Plano</h4>
+                        <ul class="beneficios-list" id="beneficiosList">
+                            <li><i class="fas fa-check"></i> Acesso 24h</li>
+                            <li><i class="fas fa-check"></i> Aulas em grupo</li>
+                            <li><i class="fas fa-check"></i> Personal Trainer</li>
+                            <li><i class="fas fa-check"></i> Avaliação Física</li>
+                            <li><i class="fas fa-check"></i> App exclusivo</li>
+                        </ul>
+                    </div>
+                    <div class="plano-footer">
+                        <div class="vencimento-info">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Próximo vencimento: <strong id="vencimentoData">15/04/2024</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA: PRESENÇA -->
+            <div id="paginaPresenca" class="page-content">
+                <div class="presenca-card">
+                    <div class="card-header">
+                        <i class="fas fa-calendar-check"></i>
+                        <h3>Registro de Presença</h3>
+                        <span class="badge-count" id="totalPresencas">0</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="mes-navegacao">
+                            <button id="mesAnterior" class="nav-mes"><i class="fas fa-chevron-left"></i></button>
+                            <h4 id="mesAtual">Março 2024</h4>
+                            <button id="mesProximo" class="nav-mes"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div class="calendario-presenca" id="calendarioPresenca">
+                            <!-- Calendário será gerado via JS -->
+                        </div>
+                        <div class="resumo-presenca">
+                            <div class="resumo-item">
+                                <span class="resumo-label">Total de dias</span>
+                                <strong class="resumo-valor" id="totalDiasMes">0</strong>
+                            </div>
+                            <div class="resumo-item">
+                                <span class="resumo-label">Presente</span>
+                                <strong class="resumo-valor presente" id="diasPresentes">0</strong>
+                            </div>
+                            <div class="resumo-item">
+                                <span class="resumo-label">Ausente</span>
+                                <strong class="resumo-valor ausente" id="diasAusentes">0</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA: AVALIAÇÃO FÍSICA -->
+            <div id="paginaAvaliacao" class="page-content">
+                <div class="avaliacao-card">
+                    <div class="card-header">
+                        <i class="fas fa-heartbeat"></i>
+                        <h3>Avaliação Física</h3>
+                        <span class="badge-date" id="ultimaAvaliacao">Última: 15/03/2024</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="medidas-grid">
+                            <div class="medida-card">
+                                <div class="medida-icon"><i class="fas fa-weight-scale"></i></div>
+                                <div class="medida-info">
+                                    <span class="medida-label">Peso</span>
+                                    <strong class="medida-valor" id="peso">72.5</strong>
+                                    <span class="medida-unidade">kg</span>
+                                </div>
+                            </div>
+                            <div class="medida-card">
+                                <div class="medida-icon"><i class="fas fa-ruler"></i></div>
+                                <div class="medida-info">
+                                    <span class="medida-label">Altura</span>
+                                    <strong class="medida-valor" id="altura">1.75</strong>
+                                    <span class="medida-unidade">m</span>
+                                </div>
+                            </div>
+                            <div class="medida-card">
+                                <div class="medida-icon"><i class="fas fa-calculator"></i></div>
+                                <div class="medida-info">
+                                    <span class="medida-label">IMC</span>
+                                    <strong class="medida-valor" id="imc">23.7</strong>
+                                    <span class="medida-unidade" id="imcClassificacao">Normal</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="recomendacao-card">
+                            <h4><i class="fas fa-lightbulb"></i> Recomendação</h4>
+                            <p id="recomendacao">Seu IMC está dentro da faixa considerada normal. Continue mantendo uma rotina regular de exercícios e alimentação balanceada!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+</body>
+</html>

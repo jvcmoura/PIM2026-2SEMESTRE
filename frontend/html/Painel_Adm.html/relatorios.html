@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Fit - Relatórios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="../../css/Painel_adm/relatorios.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- MENU LATERAL -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h2>ULTRA FIT</h2>
+                <span>Gestão Corporativa</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="paineladm.html" class="nav-item"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+                <a href="alunos.html" class="nav-item"><i class="fas fa-users"></i><span>Alunos</span></a>
+                <a href="professores.html" class="nav-item"><i class="fas fa-chalkboard-user"></i><span>Professores</span></a>
+                <a href="planos.html" class="nav-item"><i class="fas fa-clipboard-list"></i><span>Planos</span></a>
+                <a href="pagamentos.html" class="nav-item"><i class="fas fa-credit-card"></i><span>Pagamentos</span></a>
+                <a href="relatorios.html" class="nav-item active"><i class="fas fa-chart-line"></i><span>Relatórios</span></a>
+            </nav>
+            <div class="sidebar-footer">
+            <button id="btnSair" onclick="fazerLogout()" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:#ccc;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:0.85rem;width:100%;margin-bottom:10px;" onmouseover="this.style.background='rgba(231,76,60,0.35)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#ccc'">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+                <i class="fas fa-dumbbell"></i> v2.0 · Ultra Fit
+            </div>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="main-content">
+            <!-- CABEÇALHO -->
+            <div class="page-header">
+                <div>
+                    <h1>Relatórios</h1>
+                    <p>Análise de dados e métricas da academia</p>
+                </div>
+                <button class="btn-secondary" id="btnAtualizar">
+                    <i class="fas fa-sync-alt"></i> Atualizar Dados
+                </button>
+            </div>
+
+            <!-- CARDS INDICADORES -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalAlunos">0</h3>
+                        <p>Total de Alunos</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
+                    <div class="stat-info">
+                        <h3 id="faturamento">R$ 0</h3>
+                        <p>Faturamento Mensal</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                    <div class="stat-info">
+                        <h3 id="planoMaisVendido">-</h3>
+                        <p>Plano + Vendido</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="stat-info">
+                        <h3 id="taxaInadimplencia">0%</h3>
+                        <p>Taxa de Inadimplência</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRÁFICO DE BARRAS -->
+            <div class="charts-row">
+                <div class="chart-container">
+                    <div class="section-title">
+                        <i class="fas fa-chart-bar"></i> Comparativo Geral
+                        <span class="title-badge">Alunos vs Planos vs Pagamentos</span>
+                    </div>
+                    <canvas id="barChart"></canvas>
+                </div>
+
+                <!-- GRÁFICO DE LINHA -->
+                <div class="chart-container">
+                    <div class="section-title">
+                        <i class="fas fa-chart-line"></i> Crescimento de Alunos
+                        <span class="title-badge">Últimos 6 meses</span>
+                    </div>
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+
+            <!-- GRÁFICO DE PIZZA -->
+            <div class="charts-row">
+                <div class="chart-container half-width">
+                    <div class="section-title">
+                        <i class="fas fa-chart-pie"></i> Distribuição de Planos
+                        <span class="title-badge">Por tipo de assinatura</span>
+                    </div>
+                    <canvas id="pieChart"></canvas>
+                </div>
+
+                <!-- INFORMAÇÕES ADICIONAIS -->
+                <div class="info-container half-width">
+                    <div class="section-title">
+                        <i class="fas fa-info-circle"></i> Resumo Financeiro
+                    </div>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <div class="info-label"><i class="fas fa-check-circle"></i> Receita Total</div>
+                            <div class="info-value" id="receitaTotal">R$ 0</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label"><i class="fas fa-clock"></i> Receita Pendente</div>
+                            <div class="info-value" id="receitaPendente">R$ 0</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label"><i class="fas fa-chart-line"></i> Ticket Médio</div>
+                            <div class="info-value" id="ticketMedio">R$ 0</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label"><i class="fas fa-calendar"></i> Mês Referência</div>
+                            <div class="info-value" id="mesReferencia">Março 2024</div>
+                        </div>
+                    </div>
+                    
+                    <!-- TOP PLANOS -->
+                    <div class="section-title" style="margin-top: 24px;">
+                        <i class="fas fa-ranking-star"></i> Ranking de Planos
+                    </div>
+                    <div class="ranking-list" id="rankingPlanos">
+                        <!-- Será preenchido via JS -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/Painel_Adm/relatorios.js"></script>
+    <!-- VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+
+
+    <button class="btn btn-primary" onclick="gerarExcel()">
+    📎 Gerar Relatório
+</button>
+
+</body>
+</html>

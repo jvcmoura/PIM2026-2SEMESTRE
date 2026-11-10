@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Fit - Alunos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../../css/Painel_adm/aluno.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- MENU LATERAL -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h2>ULTRA FIT</h2>
+                <span>Gestão Corporativa</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="paineladm.html" class="nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="alunos.html" class="nav-item active">
+                    <i class="fas fa-users"></i>
+                    <span>Alunos</span>
+                </a>
+                <a href="professores.html" class="nav-item">
+                    <i class="fas fa-chalkboard-user"></i>
+                    <span>Professores</span>
+                </a>
+                <a href="planos.html" class="nav-item">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Planos</span>
+                </a>
+                <a href="pagamentos.html" class="nav-item">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Pagamentos</span>
+                </a>
+                <a href="relatorios.html" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Relatórios</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+            <button id="btnSair" onclick="fazerLogout()" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:#ccc;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:0.85rem;width:100%;margin-bottom:10px;" onmouseover="this.style.background='rgba(231,76,60,0.35)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#ccc'">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+                <i class="fas fa-dumbbell"></i> v2.0 · Ultra Fit
+            </div>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="main-content">
+            <!-- CABEÇALHO -->
+            <div class="page-header">
+                <div>
+                    <h1>Alunos</h1>
+                    <p>Gerenciamento de alunos cadastrados</p>
+                </div>
+                <button class="btn-primary" id="btnNovoAluno">
+                    <i class="fas fa-plus"></i> Novo Aluno
+                </button>
+            </div>
+
+            <!-- ESTATÍSTICAS RÁPIDAS -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalAlunos">0</h3>
+                        <p>Total de Alunos</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-info">
+                        <h3 id="alunosAtivos">0</h3>
+                        <p>Alunos Ativos</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="stat-info">
+                        <h3 id="alunosInadimplentes">0</h3>
+                        <p>Inadimplentes</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABELA DE ALUNOS -->
+            <div class="table-container">
+                <div class="table-header">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Buscar aluno por nome, email ou CPF...">
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table id="alunosTable">
+                        <thead>
+                            <tr>
+                                <th>Aluno</th>
+                                <th>Email</th>
+                                <th>Plano</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Os alunos serão inseridos aqui via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- MENSAGEM QUANDO NÃO HÁ ALUNOS -->
+                <div id="emptyMessage" class="empty-message" style="display: none;">
+                    <i class="fas fa-users-slash"></i>
+                    <h3>Nenhum aluno cadastrado</h3>
+                    <p>Clique em "Novo Aluno" para começar</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL CADASTRAR ALUNO -->
+    <div id="modalAluno" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-plus"></i> Novo Aluno</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="formAluno">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Nome Completo</label>
+                    <input type="text" id="nome" required placeholder="Digite o nome completo">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="email" required placeholder="email@exemplo.com">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-id-card"></i> CPF</label>
+                    <input type="text" id="cpf" required placeholder="000.000.000-00">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-tag"></i> Plano</label>
+                    <select id="plano">
+                        <option value="Básico">Básico - R$ 89,90/mês</option>
+                        <option value="Premium">Premium - R$ 149,90/mês</option>
+                        <option value="Ultra">Ultra - R$ 199,90/mês</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-toggle-on"></i> Status</label>
+                    <select id="status">
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inadimplente">Inadimplente</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" id="cancelModal">Cancelar</button>
+                    <button type="submit" class="btn-primary">Cadastrar Aluno</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ACESSIBILIDADE LIBRAS -->
+
+
+<script>
+function lerTexto(){
+ alert("O VLibras irá traduzir o texto da página.");
+}
+</script>
+
+
+    <script src="../../js/Painel_Adm/aluno.js"></script>
+    <!-- VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+</body>
+</html>

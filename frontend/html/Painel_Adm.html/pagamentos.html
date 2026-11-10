@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Fit - Pagamentos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../../css/Painel_adm/pagamento.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- MENU LATERAL -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h2>ULTRA FIT</h2>
+                <span>Gestão Corporativa</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="paineladm.html" class="nav-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="alunos.html" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Alunos</span>
+                </a>
+                <a href="professores.html" class="nav-item">
+                    <i class="fas fa-chalkboard-user"></i>
+                    <span>Professores</span>
+                </a>
+                <a href="planos.html" class="nav-item">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Planos</span>
+                </a>
+                <a href="pagamentos.html" class="nav-item active">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Pagamentos</span>
+                </a>
+                <a href="relatorios.html" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Relatórios</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+            <button id="btnSair" onclick="fazerLogout()" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:#ccc;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:0.85rem;width:100%;margin-bottom:10px;" onmouseover="this.style.background='rgba(231,76,60,0.35)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#ccc'">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+                <i class="fas fa-dumbbell"></i> v2.0 · Ultra Fit
+            </div>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="main-content">
+            <!-- CABEÇALHO -->
+            <div class="page-header">
+                <div>
+                    <h1>Pagamentos</h1>
+                    <p>Controle financeiro da academia</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary" id="btnFiltrar">
+                        <i class="fas fa-filter"></i> Filtrar
+                    </button>
+                    <button class="btn-primary" id="btnRelatorio">
+                        <i class="fas fa-download"></i> Relatório
+                    </button>
+                </div>
+            </div>
+
+            <!-- CARDS RESUMO FINANCEIRO -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalPago">R$ 0</h3>
+                        <p>Total Recebido</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalPendente">R$ 0</h3>
+                        <p>Valor Pendente</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalAtrasado">R$ 0</h3>
+                        <p>Valor Atrasado</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-percent"></i></div>
+                    <div class="stat-info">
+                        <h3 id="taxaAdimplencia">0%</h3>
+                        <p>Taxa de Adimplência</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FILTROS RÁPIDOS -->
+            <div class="filters-bar" id="filtersBar" style="display: none;">
+                <button class="filter-btn active" data-filter="todos">Todos</button>
+                <button class="filter-btn" data-filter="Pago">Pagos</button>
+                <button class="filter-btn" data-filter="Pendente">Pendentes</button>
+                <button class="filter-btn" data-filter="Atrasado">Atrasados</button>
+            </div>
+
+            <!-- TABELA DE PAGAMENTOS -->
+            <div class="table-container">
+                <div class="table-header">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Buscar por nome do aluno...">
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table id="pagamentosTable">
+                        <thead>
+                            <tr>
+                                <th>Aluno</th>
+                                <th>Plano</th>
+                                <th>Valor</th>
+                                <th>Vencimento</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Os pagamentos serão inseridos aqui via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- MENSAGEM QUANDO NÃO HÁ PAGAMENTOS -->
+                <div id="emptyMessage" class="empty-message" style="display: none;">
+                    <i class="fas fa-credit-card"></i>
+                    <h3>Nenhum pagamento encontrado</h3>
+                    <p>Tente ajustar os filtros de busca</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL DETALHES DO PAGAMENTO -->
+    <div id="modalDetalhes" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2><i class="fas fa-info-circle"></i> Detalhes do Pagamento</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body" id="detalhesContent">
+                <!-- Conteúdo dinâmico -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="fecharModalDetalhes()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CONFIRMAÇÃO PAGAMENTO -->
+    <div id="modalConfirmacao" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2><i class="fas fa-check-circle"></i> Confirmar Pagamento</h2>
+                <span class="close-modal close-confirm">&times;</span>
+            </div>
+            <div class="modal-body" id="confirmacaoContent">
+                <p>Tem certeza que deseja marcar este pagamento como <strong>PAGO</strong>?</p>
+                <p style="margin-top: 8px; color: #ff7a2f;" id="confirmacaoInfo"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" id="cancelarConfirmacao">Cancelar</button>
+                <button class="btn-primary" id="confirmarPagamento">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/Painel_Adm/pagamentos.js"></script>
+    <!-- VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+</body>
+</html>

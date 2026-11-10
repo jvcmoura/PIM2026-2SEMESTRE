@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Fit Academia - Sua melhor versão começa aqui</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <h1>ULTRA FIT</h1>
+                <span>Academia</span>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#inicio" class="nav-link">Início</a>
+                <a href="#planos" class="nav-link">Planos</a>
+                <a href="#equipe" class="nav-link">Equipe</a>
+                <a href="#contato" class="nav-link">Contato</a>
+            </nav>
+            
+            <div class="header-actions">
+                <a href="html/login.html" class="btn-login">Entrar</a>
+                <a href="html/cadastro.html" class="btn-signup">Cadastrar</a>
+            </div>
+            
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section id="inicio" class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2 class="hero-title">Transforme seu corpo<br>na <span class="highlight">Ultra Fit</span></h2>
+                    <p class="hero-subtitle">Equipamentos modernos, ambiente motivador e profissionais qualificados para você alcançar seus objetivos.</p>
+                    <div class="hero-buttons">
+                        <a href="#planos" class="btn-primary">Ver Planos</a>
+                        <a href="html/cadastro.html" class="btn-secondary">Começar Agora</a>
+                    </div>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Alunos Ativos</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">20+</span>
+                        <span class="stat-label">Professores</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">Anos de Mercado</span>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">↓</div>
+        </section>
+
+        <!-- BENEFÍCIOS SECTION -->
+        <section class="beneficios">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Vantagens</span>
+                    <h2 class="section-title">Por que escolher a Ultra Fit?</h2>
+                    <p class="section-subtitle">Oferecemos tudo que você precisa para uma jornada fitness completa</p>
+                </div>
+                
+                <div class="beneficios-grid">
+                    <div class="card beneficio-card">
+                        <div class="card-icon">
+                            <img src="img/equipamentos.png" alt="Equipamentos">
+                        </div>
+                        <h3>Equipamentos modernos</h3>
+                        <p>Aparelhos de última geração para treinos completos e eficientes.</p>
+                    </div>
+                    
+                    <div class="card beneficio-card">
+                        <div class="card-icon">
+                            <img src="img/professores.png" alt="Professores">
+                        </div>
+                        <h3>Professores qualificados</h3>
+                        <p>Profissionais preparados para orientar e motivar seu treino.</p>
+                    </div>
+                    
+                    <div class="card beneficio-card">
+                        <div class="card-icon">
+                            <img src="img/clima.png" alt="Climatização">
+                        </div>
+                        <h3>Ambiente climatizado</h3>
+                        <p>Conforto e qualidade em todos os horários de funcionamento.</p>
+                    </div>
+                    
+                    <div class="card beneficio-card">
+                        <div class="card-icon">
+                            <img src="img/planos.png" alt="Planos">
+                        </div>
+                        <h3>Planos acessíveis</h3>
+                        <p>Planos que cabem no seu bolso com benefícios exclusivos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PLANOS SECTION -->
+        <section id="planos" class="planos">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Preços</span>
+                    <h2 class="section-title">Escolha o plano ideal para você</h2>
+                    <p class="section-subtitle">Planos flexíveis que se adaptam à sua rotina e objetivos</p>
+                </div>
+                
+                <div class="planos-grid">
+                    <!-- Plano Básico -->
+                    <div class="card plano-card" data-plano="basico">
+                        <div class="plano-badge">Iniciante</div>
+                        <h3 class="plano-nome">Plano Básico</h3>
+                        <div class="plano-preco">
+                            <span class="preco-valor">R$ 79</span>
+                            <span class="preco-periodo">/mês</span>
+                        </div>
+                        <ul class="plano-beneficios">
+                            <li>✓ Musculação completa</li>
+                            <li>✓ Acesso horário comercial</li>
+                            <li>✓ Avaliação física inicial</li>
+                            <li>✓ App de acompanhamento</li>
+                        </ul>
+                        <button class="btn-assinar">Assinar Agora</button>
+                    </div>
+                    
+                    <!-- Plano Premium -->
+                    <div class="card plano-card destaque" data-plano="premium">
+                        <div class="plano-badge popular">Mais Popular</div>
+                        <h3 class="plano-nome">Plano Premium</h3>
+                        <div class="plano-preco">
+                            <span class="preco-valor">R$ 109</span>
+                            <span class="preco-periodo">/mês</span>
+                        </div>
+                        <ul class="plano-beneficios">
+                            <li>✓ Musculação completa</li>
+                            <li>✓ Aulas de grupo (Yoga, Pilates, Zumba)</li>
+                            <li>✓ Avaliação física mensal</li>
+                            <li>✓ Área cardio liberada</li>
+                            <li>✓ Estacionamento incluso</li>
+                        </ul>
+                        <button class="btn-assinar">Assinar Agora</button>
+                    </div>
+                    
+                    <!-- Plano Ultra -->
+                    <div class="card plano-card" data-plano="ultra">
+                        <div class="plano-badge">Completo</div>
+                        <h3 class="plano-nome">Plano Ultra</h3>
+                        <div class="plano-preco">
+                            <span class="preco-valor">R$ 149</span>
+                            <span class="preco-periodo">/mês</span>
+                        </div>
+                        <ul class="plano-beneficios">
+                            <li>✓ Musculação completa</li>
+                            <li>✓ Todas as aulas liberadas</li>
+                            <li>✓ Personal trainer incluso</li>
+                            <li>✓ Acesso 24h</li>
+                            <li>✓ Área premium VIP</li>
+                            <li>✓ Cadeira de massagem</li>
+                        </ul>
+                        <button class="btn-assinar">Assinar Agora</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EQUIPE SECTION -->
+        <section id="equipe" class="equipe">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Profissionais</span>
+                    <h2 class="section-title">Nossa Equipe Especializada</h2>
+                    <p class="section-subtitle">Profissionais dedicados a ajudar você a alcançar seus objetivos</p>
+                </div>
+                
+                <div class="equipe-grid">
+                    <div class="card equipe-card">
+                        <div class="equipe-imagem">
+                            <img src="img/recepcao.png" alt="Recepção">
+                        </div>
+                        <h3>Recepção</h3>
+                        <p>Atendimento acolhedor e suporte completo aos alunos.</p>
+                    </div>
+                    
+                    <div class="card equipe-card">
+                        <div class="equipe-imagem">
+                            <img src="img/professores-equipe.png" alt="Professores">
+                        </div>
+                        <h3>Professores</h3>
+                        <p>Especialistas em treinamento físico e nutrição esportiva.</p>
+                    </div>
+                    
+                    <div class="card equipe-card">
+                        <div class="equipe-imagem">
+                            <img src="img/lider.png" alt="Liderança">
+                        </div>
+                        <h3>Liderança</h3>
+                        <p>Gestão e organização para sua melhor experiência.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTATO SECTION -->
+        <section id="contato" class="contato">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Fale Conosco</span>
+                    <h2 class="section-title">Entre em Contato</h2>
+                    <p class="section-subtitle">Estamos prontos para atender você</p>
+                </div>
+                
+                <div class="contato-content">
+                    <div class="contato-info">
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <div>
+                                <h4>Endereço</h4>
+                                <p>Rua Exemplo, 123 - Centro, São Paulo - SP</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📞</span>
+                            <div>
+                                <h4>Telefone</h4>
+                                <p>(11) 99999-9999</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">✉️</span>
+                            <div>
+                                <h4>Email</h4>
+                                <p>contato@ultrafit.com</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">⏰</span>
+                            <div>
+                                <h4>Horário de Funcionamento</h4>
+                                <p>Segunda a Sexta: 06h - 23h<br>Sábado: 08h - 18h</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form class="contato-form" id="contatoForm">
+                        <input type="text" placeholder="Seu nome" required>
+                        <input type="email" placeholder="Seu email" required>
+                        <textarea placeholder="Sua mensagem" rows="4" required></textarea>
+                        <button type="submit" class="btn-primary">Enviar Mensagem</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>ULTRA FIT</h3>
+                <p>Sua melhor versão começa aqui</p>
+            </div>
+            <div class="footer-links">
+                <a href="#inicio">Início</a>
+                <a href="#planos">Planos</a>
+                <a href="#equipe">Equipe</a>
+                <a href="#contato">Contato</a>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2026 Ultra Fit Academia - Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    
+    <script src="js/script.js"></script>
+    <!-- VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+</body>
+</html>

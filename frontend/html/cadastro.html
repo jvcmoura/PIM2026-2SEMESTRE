@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Ultra Fit Academia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/cadastro.css">
+</head>
+<body>
+    <div class="cadastro-container">
+        <!-- Lado Esquerdo - Formulário -->
+        <div class="cadastro-form-side">
+            <div class="form-wrapper">
+                <div class="form-header">
+                    <a href="../index.html" class="back-link">
+                        <i class="fas fa-arrow-left"></i> Voltar
+                    </a>
+                    <div class="logo">
+                        <i class="fas fa-dumbbell"></i>
+                        <h1>ULTRA FIT</h1>
+                    </div>
+                    <h2>Criar Conta</h2>
+                    <p>Preencha seus dados para começar</p>
+                </div>
+
+                <form id="cadastroForm" class="cadastro-form">
+                    <div class="form-row">
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="input-field">
+                                <input type="text" id="nome" required autocomplete="off">
+                                <label for="nome">Nome</label>
+                                <span class="input-border"></span>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="input-field">
+                                <input type="text" id="sobrenome" required autocomplete="off">
+                                <label for="sobrenome">Sobrenome</label>
+                                <span class="input-border"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="input-field">
+                                <input type="date" id="dataNascimento" required placeholder=" ">
+                                <label for="dataNascimento">Data de Nascimento</label>
+                                <span class="input-border"></span>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <i class="fas fa-id-card"></i>
+                            </div>
+                            <div class="input-field">
+                                <input type="text" id="cpf" required maxlength="14" placeholder=" ">
+                                <label for="cpf">CPF</label>
+                                <span class="input-border"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="input-field">
+                            <input type="email" id="email" required autocomplete="off">
+                            <label for="email">Email</label>
+                            <span class="input-border"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="input-field">
+                                <input type="password" id="senha" required>
+                                <label for="senha">Senha</label>
+                                <span class="input-border"></span>
+                                <button type="button" class="toggle-password" data-target="senha">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="input-field">
+                                <input type="password" id="confirmarSenha" required>
+                                <label for="confirmarSenha">Confirmar Senha</label>
+                                <span class="input-border"></span>
+                                <button type="button" class="toggle-password" data-target="confirmarSenha">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-cadastrar">
+                        <span>Cadastrar</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                    <div class="form-footer">
+                        <p>Já tem conta? <a href="login.html">Faça login</a></p>
+                    </div>
+                </form>
+
+                <div id="errorMessage" class="error-message"></div>
+                <div id="successMessage" class="success-message"></div>
+            </div>
+        </div>
+
+        <!-- Lado Direito - Plano -->
+        <div class="cadastro-plano-side">
+            <div class="plano-content">
+                <div class="plano-header">
+                    <i class="fas fa-crown"></i>
+                    <h3>Escolha seu Plano</h3>
+                    <p>Selecione o plano ideal para você</p>
+                </div>
+
+                <div id="planoSelecionado" class="plano-selecionado"></div>
+
+                <div class="planos-opcoes" id="planosOpcoes">
+                    <div class="planos-buttons">
+                        <button type="button" class="plano-option" data-plano="basico">
+                            <div class="plano-name">Plano Básico</div>
+                            <div class="plano-price">R$ 79 <span>/mês</span></div>
+                            <div class="plano-features">
+                                <span>Musculação</span>
+                                <span>Horário comercial</span>
+                            </div>
+                        </button>
+                        <button type="button" class="plano-option" data-plano="premium">
+                            <div class="plano-name">Plano Premium</div>
+                            <div class="plano-price">R$ 109 <span>/mês</span></div>
+                            <div class="plano-features">
+                                <span>Musculação</span>
+                                <span>Aulas de grupo</span>
+                                <span>Avaliação mensal</span>
+                            </div>
+                            <div class="plano-badge-popular">MAIS VENDIDO</div>
+                        </button>
+                        <button type="button" class="plano-option" data-plano="ultra">
+                            <div class="plano-name">Plano Ultra</div>
+                            <div class="plano-price">R$ 149 <span>/mês</span></div>
+                            <div class="plano-features">
+                                <span>Musculação</span>
+                                <span>Todas as aulas</span>
+                                <span>Personal trainer</span>
+                                <span>Acesso 24h</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="plano-beneficios" id="planoBeneficios">
+                    <h4><i class="fas fa-gift"></i> Benefícios do plano:</h4>
+                    <ul id="beneficiosList">
+                        <li><i class="fas fa-check-circle"></i> Selecione um plano</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/cadastro.js"></script>
+    <!-- VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+</body>
+</html>

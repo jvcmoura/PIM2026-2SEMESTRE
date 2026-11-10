@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Ultra Fit Academia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo">
+                    <i class="fas fa-dumbbell"></i>
+                    <h1>ULTRA FIT</h1>
+                </div>
+                <p class="subtitle">Faça login para continuar</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="email" id="email" required autocomplete="email">
+                        <label for="email">Email</label>
+                        <span class="input-border"></span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" id="senha" required autocomplete="current-password">
+                        <label for="senha">Senha</label>
+                        <span class="input-border"></span>
+                        <button type="button" class="toggle-password" onclick="togglePassword()">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-login">
+                    <span>Entrar</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+
+                <div class="login-footer">
+                    <p>Não tem conta? <a href="cadastro.html">Cadastre-se</a></p>
+                </div>
+            </form>
+
+            <div id="errorMessage" class="error-message"></div>
+        </div>
+
+        <div class="login-bg">
+            <div class="bg-overlay"></div>
+            
+            <!-- Cards flutuantes decorativos -->
+            <div class="floating-card">
+                <i class="fas fa-dumbbell"></i>
+                <span>+500 alunos</span>
+            </div>
+            <div class="floating-card">
+                <i class="fas fa-chalkboard-user"></i>
+                <span>20 professores</span>
+            </div>
+            <div class="floating-card">
+                <i class="fas fa-trophy"></i>
+                <span>10+ anos</span>
+            </div>
+            <div class="floating-card">
+                <i class="fas fa-heart"></i>
+                <span>98% aprovação</span>
+            </div>
+            
+            <div class="bg-content">
+                <div class="bg-icon">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <h2>Bem-vindo de volta!</h2>
+                <p>Transforme seu corpo na Ultra Fit</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/login.js"></script>
+    <!-- VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+</body>
+</html>

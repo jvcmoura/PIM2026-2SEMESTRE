@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Ultra Fit - Dashboard Corporativo</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="../../css/Painel_adm/paineladm.css">
+</head>
+<body>
+<div class="app-container">
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+        <div class="logo-area">
+            <h2>ULTRA FIT</h2>
+            <span>Gestão Corporativa</span>
+        </div>
+        <div class="nav-menu">
+            <a href="paineladm.html" class="nav-item active"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+            <a href="alunos.html" class="nav-item"><i class="fas fa-users"></i> <span>Alunos</span></a>
+            <a href="professores.html" class="nav-item"><i class="fas fa-chalkboard-user"></i> <span>Professores</span></a>
+            <a href="planos.html" class="nav-item"><i class="fas fa-clipboard-list"></i> <span>Planos</span></a>
+            <a href="pagamentos.html" class="nav-item"><i class="fas fa-credit-card"></i> <span>Pagamentos</span></a>
+            <a href="relatorios.html" class="nav-item"><i class="fas fa-chart-line"></i> <span>Relatórios</span></a>
+        </div>
+        <div class="sidebar-footer">
+            <button id="btnSair" onclick="fazerLogout()" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:#ccc;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:0.85rem;width:100%;margin-bottom:10px;" onmouseover="this.style.background='rgba(231,76,60,0.35)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#ccc'">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+            <i class="fas fa-dumbbell"></i> v2.0 · Ultra Fit
+        </div>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+        <div class="top-header">
+            <div class="page-title">
+                <h1>Olá, <span id="adminNome">Gestor</span></h1>
+                <p>Bem-vindo ao painel da Ultra Fit · visão geral</p>
+            </div>
+            <div class="user-badge">
+                <i class="fas fa-bell"></i>
+                <i class="fas fa-user-circle fa-lg"></i>
+                <span id="adminBadge">Admin</span>
+            </div>
+        </div>
+
+        <!-- PRIMEIRO GRID (4 CARDS PRINCIPAIS) -->
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-header">Total de Alunos <i class="fas fa-user-friends"></i></div>
+                <div class="card-number" id="totalAlunos">386</div>
+                <div class="card-footer"><a href="#">Gerenciar <i class="fas fa-arrow-right"></i></a></div>
+            </div>
+            <div class="card">
+                <div class="card-header">Professores Cadastrados</div>
+                <div class="card-number" id="totalProfessores">24</div>
+                <div class="card-footer"><a href="#">Ver equipe</a></div>
+            </div>
+            <div class="card highlight-orange">
+                <div class="card-header">Planos Ativos</div>
+                <div class="card-number" id="planosAtivos">312</div>
+                <div class="card-footer"><a href="#">Detalhar planos</a></div>
+            </div>
+            <div class="card">
+                <div class="card-header">Faturamento Total</div>
+                <div class="card-number" id="faturamentoTotal">R$ 94.520</div>
+                <div class="card-footer"><a href="#">Relatório financeiro</a></div>
+            </div>
+        </div>
+
+        <!-- SEGUNDO GRID (FOCO FINANCEIRO) -->
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-header">Pagamentos Recebidos (mês)</div>
+                <div class="card-number" id="pagRecebidos">R$ 46.280</div>
+                <div class="card-footer"><a href="#">Ver extrato</a></div>
+            </div>
+            <div class="card alert-red">
+                <div class="card-header">Pagamentos Pendentes</div>
+                <div class="card-number" id="pagPendentes">R$ 11.340</div>
+                <div class="card-footer"><a href="#">Cobrar agora</a></div>
+            </div>
+            <div class="card alert-red">
+                <div class="card-header">Inadimplentes</div>
+                <div class="card-number" id="inadimplentes">32</div>
+                <div class="card-footer"><a href="#">Contatos urgentes</a></div>
+            </div>
+            <div class="card highlight-orange">
+                <div class="card-header">Receita Mensal (atual)</div>
+                <div class="card-number" id="receitaMensal">R$ 52.180</div>
+                <div class="card-footer"><a href="#">Previsão próximo mês</a></div>
+            </div>
+        </div>
+
+        <!-- ÁREA DE GRÁFICOS + ATIVIDADES RECENTES -->
+        <div class="charts-row">
+            <div style="flex:2; display: flex; flex-direction: column; gap: 28px;">
+                <div class="chart-container">
+                    <div class="section-title"><i class="fas fa-chart-simple"></i> Faturamento por Plano (R$)</div>
+                    <canvas id="barChart" width="400" height="200"></canvas>
+                </div>
+                <div class="chart-container">
+                    <div class="section-title"><i class="fas fa-chart-line"></i> Crescimento de Alunos (Últimos 6 meses)</div>
+                    <canvas id="lineChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+            <div class="recent-activities">
+                <div class="section-title"><i class="fas fa-clock"></i> Atividades Recentes</div>
+                <ul class="activity-list" id="activityList"></ul>
+                <div style="margin-top: 16px; text-align: center;">
+                    <a href="#" style="color:#ff7a2f; font-weight:500;">Ver todas notificações →</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="../../js/Painel_Adm/adm.js"></script>
+    <!-- VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Fit - Professores</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../../css/Painel_adm/professores.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- MENU LATERAL -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <h2>ULTRA FIT</h2>
+                <span>Gestão Corporativa</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="paineladm.html" class="nav-item"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+                <a href="alunos.html" class="nav-item"><i class="fas fa-users"></i><span>Alunos</span></a>
+                <a href="professores.html" class="nav-item active"><i class="fas fa-chalkboard-user"></i><span>Professores</span></a>
+                <a href="planos.html" class="nav-item"><i class="fas fa-clipboard-list"></i><span>Planos</span></a>
+                <a href="pagamentos.html" class="nav-item"><i class="fas fa-credit-card"></i><span>Pagamentos</span></a>
+                <a href="relatorios.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Relatórios</span></a>
+            </nav>
+            <div class="sidebar-footer">
+            <button id="btnSair" onclick="fazerLogout()" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:#ccc;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:0.85rem;width:100%;margin-bottom:10px;" onmouseover="this.style.background='rgba(231,76,60,0.35)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#ccc'">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+                <i class="fas fa-dumbbell"></i> v2.0 · Ultra Fit
+            </div>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="main-content">
+            <!-- CABEÇALHO -->
+            <div class="page-header">
+                <div>
+                    <h1>Professores</h1>
+                    <p>Gerenciamento de professores da academia</p>
+                </div>
+                <button class="btn-primary" id="btnNovoProfessor">
+                    <i class="fas fa-plus"></i> Novo Professor
+                </button>
+            </div>
+
+            <!-- ESTATÍSTICAS -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-chalkboard-user"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalProfessores">0</h3>
+                        <p>Total</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-info">
+                        <h3 id="professoresAtivos">0</h3>
+                        <p>Ativos</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-times-circle"></i></div>
+                    <div class="stat-info">
+                        <h3 id="professoresInativos">0</h3>
+                        <p>Inativos</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PESQUISA -->
+            <div class="table-container">
+                <div class="table-header">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Buscar professor...">
+                    </div>
+                </div>
+
+                <!-- TABELA -->
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>Professor</th><th>Especialidade</th><th>Horário</th><th>Status</th><th>Ações</th></tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+
+                <!-- MENSAGEM VAZIA -->
+                <div id="emptyMessage" class="empty-message" style="display: none;">
+                    <i class="fas fa-chalkboard-user"></i>
+                    <h3>Nenhum professor cadastrado</h3>
+                    <p>Clique em "Novo Professor" para começar</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL -->
+    <div id="modalProfessor" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle"><i class="fas fa-user-plus"></i> Professor</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="formProfessor">
+                <input type="hidden" id="professorId">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Nome</label>
+                    <input type="text" id="nome" required placeholder="Nome completo">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-dumbbell"></i> Especialidade</label>
+                    <select id="especialidade" required>
+                        <option value="">Selecione</option>
+                        <option value="Musculação">Musculação</option>
+                        <option value="Cardio">Cardio</option>
+                        <option value="Funcional">Funcional</option>
+                        <option value="Personal Trainer">Personal Trainer</option>
+                        <option value="Yoga">Yoga</option>
+                        <option value="Pilates">Pilates</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-clock"></i> Horário</label>
+                    <select id="horario" required>
+                        <option value="">Selecione</option>
+                        <option value="Manhã (06h-12h)">Manhã (06h-12h)</option>
+                        <option value="Tarde (12h-18h)">Tarde (12h-18h)</option>
+                        <option value="Noite (18h-22h)">Noite (18h-22h)</option>
+                        <option value="Integral">Integral</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-toggle-on"></i> Status</label>
+                    <select id="status">
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" id="cancelModal">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../js/Painel_Adm/professores.js"></script>
+    <!-- VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+</body>
+</html>

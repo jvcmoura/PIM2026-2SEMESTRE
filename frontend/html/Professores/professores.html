@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Fit - Área do Professor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../../css/Professores/professores.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- MENU LATERAL -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <div class="logo-text">
+                    <h2>ULTRA FIT</h2>
+                    <span>Área do Professor</span>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-page="painel">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Painel</span>
+                </a>
+                <a href="#" class="nav-item" data-page="alunos">
+                    <i class="fas fa-users"></i>
+                    <span>Alunos</span>
+                </a>
+                <a href="#" class="nav-item" data-page="presenca">
+                    <i class="fas fa-fingerprint"></i>
+                    <span>Presença</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="professor-info">
+                    <i class="fas fa-chalkboard-user"></i>
+                    <span id="sidebarNomeProf">Prof. Carregando...</span>
+                </div>
+                <div class="system-version">
+                    <i class="fas fa-code-branch"></i>
+                    <span>v2.0 · Ultra Fit</span>
+                </div>
+                <button id="btnLogoutProf" onclick="fazerLogout()" style="margin-top:12px;width:100%;padding:8px;background:#e74c3c;color:white;border:none;border-radius:8px;cursor:pointer;font-size:0.85rem;">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </div>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="main-content">
+            <!-- CABEÇALHO -->
+            <div class="page-header">
+                <div class="header-title">
+                    <h1 id="pageTitle">Painel do Professor</h1>
+                    <p id="pageSubtitle">Bem-vindo, <span id="welcomeNomeProf">Professor</span>!</p>
+                </div>
+                <div class="header-actions">
+                    <div class="date-badge">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="dataAtual"></span>
+                    </div>
+                    <div class="notification-badge">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge-dot"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA: PAINEL -->
+            <div id="paginaPainel" class="page-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-details">
+                            <span class="stat-label">Total de Alunos</span>
+                            <h3 class="stat-value" id="totalAlunos">0</h3>
+                        </div>
+                        <div class="stat-trend">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-details">
+                            <span class="stat-label">Presentes Hoje</span>
+                            <h3 class="stat-value" id="presentesHoje">0</h3>
+                        </div>
+                        <div class="stat-trend">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon red">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="stat-details">
+                            <span class="stat-label">Faltas Hoje</span>
+                            <h3 class="stat-value" id="faltasHoje">0</h3>
+                        </div>
+                        <div class="stat-trend">
+                            <i class="fas fa-frown"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GRÁFICO DE PRESENÇA -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="section-title">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Resumo de Presença Hoje</span>
+                        </div>
+                        <div class="chart-legend">
+                            <span class="legend-item">
+                                <i class="fas fa-circle" style="color: #2ecc71;"></i> Presentes
+                            </span>
+                            <span class="legend-item">
+                                <i class="fas fa-circle" style="color: #e74c3c;"></i> Ausentes
+                            </span>
+                        </div>
+                    </div>
+                    <div class="presenca-chart">
+                        <div class="progress-circle">
+                            <svg viewBox="0 0 100 100" class="circular-chart">
+                                <path class="circle-bg" d="M50,10 a40,40 0 0,1 0,80 a40,40 0 0,1 0,-80"/>
+                                <path class="circle-progress" id="progressCircle" d="M50,10 a40,40 0 0,1 0,80 a40,40 0 0,1 0,-80"/>
+                                <text x="50" y="55" class="percentage" id="presencaPercentual">0%</text>
+                            </svg>
+                        </div>
+                        <div class="presenca-stats">
+                            <div class="presenca-box presente">
+                                <span class="presenca-label">Presentes</span>
+                                <strong class="presenca-number" id="presenteValor">0</strong>
+                            </div>
+                            <div class="presenca-box ausente">
+                                <span class="presenca-label">Ausentes</span>
+                                <strong class="presenca-number" id="ausenteValor">0</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA: ALUNOS -->
+            <div id="paginaAlunos" class="page-content">
+                <div class="table-card">
+                    <div class="table-toolbar">
+                        <div class="search-wrapper">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchAluno" placeholder="Buscar aluno por nome ou email...">
+                        </div>
+                        <div class="table-info">
+                            <i class="fas fa-users"></i>
+                            <span id="alunosCount">0</span> alunos cadastrados
+                        </div>
+                    </div>
+                    
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Aluno</th>
+                                    <th>Plano</th>
+                                    <th>Status Hoje</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listaAlunos"></tbody>
+                        </table>
+                    </div>
+                    
+                    <div id="emptyAlunos" class="empty-state">
+                        <i class="fas fa-users-slash"></i>
+                        <h3>Nenhum aluno cadastrado</h3>
+                        <p>Os alunos aparecerão aqui após o cadastro</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA: PRESENÇA -->
+            <div id="paginaPresenca" class="page-content">
+                <div class="presenca-grid">
+                    <!-- Card de Check-in Rápido -->
+                    <div class="checkin-card">
+                        <div class="card-header">
+                            <i class="fas fa-fingerprint"></i>
+                            <h3>Registrar Presença</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label><i class="fas fa-user-graduate"></i> Selecione o Aluno</label>
+                                <select id="alunoCheckin" class="custom-select">
+                                    <option value="">Escolha um aluno...</option>
+                                </select>
+                            </div>
+                            <button class="btn-checkin-primary" id="btnCheckin">
+                                <i class="fas fa-check-double"></i>
+                                <span>Confirmar Check-in</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card de Check-ins de Hoje -->
+                    <div class="checkin-card">
+                        <div class="card-header">
+                            <i class="fas fa-history"></i>
+                            <h3>Check-ins de Hoje</h3>
+                            <span class="badge-count" id="checkinsCount">0</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="checkins-list" id="checkinsHoje">
+                                <div class="empty-checkins">
+                                    <i class="fas fa-clock"></i>
+                                    <p>Nenhum check-in registrado hoje</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/Professores/professores.js"></script>
+    <!-- VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+</body>
+</html>
