@@ -18,6 +18,9 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Usuario é só uma classe base em C#; as colunas são mapeadas nas tabelas Alunos e Professores.
+        modelBuilder.Ignore<Usuario>();
+
         modelBuilder.Entity<Pagamento>()
             .ToTable(tb => tb.HasTrigger("trg_MarcarInadimplencia"));
     }
