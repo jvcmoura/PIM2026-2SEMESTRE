@@ -1,0 +1,64 @@
+erDiagram
+    direction LR
+    Professores {
+        INT Id PK "IDENTITY(1,1)"
+        NVARCHAR150 Nome "NOT NULL"
+        NVARCHAR150 Email UK "NOT NULL"
+        NVARCHAR255 SenhaHash "NOT NULL"
+        NVARCHAR100 Especialidade "NULL"
+        NVARCHAR20 Telefone "NULL"
+        NVARCHAR100 Horario "NULL"
+        DATETIME DataCadastro "DEFAULT GETDATE()"
+    }
+    Alunos ||--o{ Matriculas : "FK_Matriculas_Alunos"
+    Planos ||--o{ Matriculas : "FK_Matriculas_Planos"
+    Matriculas ||--o{ Pagamentos : "FK_Pagamentos_Matriculas"
+    Alunos ||--o{ Pagamentos : "FK_Pagamentos_Alunos"
+    Alunos ||--o{ AvaliacoesFisicas : "FK_Avaliacoes_Alunos"
+    Alunos ||--o{ Checkins : "FK_Checkins_Alunos"
+    Alunos {
+        INT Id PK "IDENTITY(1,1)"
+        NVARCHAR150 Nome "NOT NULL"
+        NVARCHAR150 Email UK "NOT NULL"
+        NVARCHAR255 SenhaHash "NOT NULL"
+        NVARCHAR20 Telefone "NULL"
+        DATETIME DataCadastro "DEFAULT GETDATE()"
+        NVARCHAR20 Status "DEFAULT Ativo"
+    }
+    Planos {
+        INT Id PK "IDENTITY(1,1)"
+        NVARCHAR100 NomePlano "NOT NULL"
+        DECIMAL10_2 Valor "NOT NULL"
+        INT DuracaoMeses "NOT NULL"
+        BIT Ativo "DEFAULT 1"
+    }
+    Matriculas {
+        INT Id PK "IDENTITY(1,1)"
+        INT AlunoId FK "NOT NULL"
+        INT PlanoId FK "NOT NULL"
+        DATE DataInicio "NOT NULL"
+        DATE DataFim "NOT NULL"
+        NVARCHAR20 Status "DEFAULT Ativa"
+    }
+    Pagamentos {
+        INT Id PK "IDENTITY(1,1)"
+        INT AlunoId FK "NOT NULL"
+        INT MatriculaId FK "NOT NULL"
+        DECIMAL10_2 Valor "NOT NULL"
+        DATE DataVencimento "NOT NULL"
+        DATE DataPagamento "NULL"
+        NVARCHAR20 Status "DEFAULT Pendente"
+    }
+    AvaliacoesFisicas {
+        INT Id PK "IDENTITY(1,1)"
+        INT AlunoId FK "NOT NULL"
+        DECIMAL5_2 Peso "NOT NULL"
+        DECIMAL4_2 Altura "NOT NULL"
+        DECIMAL IMC "PERSISTED (Peso/Altura^2)"
+        DATE DataAvaliacao "DEFAULT GETDATE()"
+    }
+    Checkins {
+        INT Id PK "IDENTITY(1,1)"
+        INT AlunoId FK "NOT NULL"
+        DATETIME DataHora "DEFAULT GETDATE()"
+    }
