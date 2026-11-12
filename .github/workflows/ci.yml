@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend:
+    name: Compilar API (.NET)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Restaurar dependências
+        run: dotnet restore backend/UltraFit.Api/UltraFit.Api.csproj
+      - name: Compilar
+        run: dotnet build backend/UltraFit.Api/UltraFit.Api.csproj --configuration Release --no-restore
+
+  docker:
+    name: Construir imagem Docker
+    runs-on: ubuntu-latest
+    needs: backend
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build da imagem
+        run: docker build -t ultrafit-api:ci backend/UltraFit.Api
+
+  mobile:
+    name: Verificar dependências do app (React Native)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Instalar dependências
+        run: npm ci
+        working-directory: mobile

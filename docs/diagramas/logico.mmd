@@ -1,0 +1,64 @@
+erDiagram
+    direction LR
+    Professores {
+        inteiro Id PK
+        texto Nome
+        texto Email UK
+        texto SenhaHash
+        texto Especialidade
+        texto Telefone
+        texto Horario
+        datahora DataCadastro
+    }
+    Alunos ||--o{ Matriculas : ""
+    Planos ||--o{ Matriculas : ""
+    Matriculas ||--o{ Pagamentos : ""
+    Alunos ||--o{ Pagamentos : ""
+    Alunos ||--o{ AvaliacoesFisicas : ""
+    Alunos ||--o{ Checkins : ""
+    Alunos {
+        inteiro Id PK
+        texto Nome
+        texto Email UK
+        texto SenhaHash
+        texto Telefone
+        datahora DataCadastro
+        texto Status
+    }
+    Planos {
+        inteiro Id PK
+        texto NomePlano
+        decimal Valor
+        inteiro DuracaoMeses
+        logico Ativo
+    }
+    Matriculas {
+        inteiro Id PK
+        inteiro AlunoId FK
+        inteiro PlanoId FK
+        data DataInicio
+        data DataFim
+        texto Status
+    }
+    Pagamentos {
+        inteiro Id PK
+        inteiro AlunoId FK
+        inteiro MatriculaId FK
+        decimal Valor
+        data DataVencimento
+        data DataPagamento
+        texto Status
+    }
+    AvaliacoesFisicas {
+        inteiro Id PK
+        inteiro AlunoId FK
+        decimal Peso
+        decimal Altura
+        decimal IMC
+        data DataAvaliacao
+    }
+    Checkins {
+        inteiro Id PK
+        inteiro AlunoId FK
+        datahora DataHora
+    }
